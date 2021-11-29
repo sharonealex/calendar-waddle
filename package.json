@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sharonealex/calendar-waddle/issues"
   },
-  "homepage": "https://github.com/sharonealex/calendar-waddle#readme"
+  "homepage": "https://github.com/sharonealex/calendar-waddle#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
