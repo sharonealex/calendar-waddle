@@ -23,11 +23,12 @@ getNotes(){
 }
 
 addNotes(note){
+    console.log("jeh")
     const {title, text} = note;
-    const newNote = {title, text, id:uuid()}
+    const newNote = { title, text, id: uuid.v1() };
     return this.getNotes().then((data)=>{
-        const notesList = JSON.parse(data);
-        return notesList.push(newNote);
+       
+        return data.push(newNote);
     }).then((updatedData)=>{
         this.write(updatedData).then(()=>{
             return newNote;

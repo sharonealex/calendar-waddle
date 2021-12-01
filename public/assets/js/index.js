@@ -39,8 +39,8 @@ const renderActiveNote = () => {
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
   } else {
-    noteTitle.setAttribute("readonly", false);
-    noteText.setAttribute("readonly", false);
+    noteTitle.removeAttribute('readonly');
+    noteText.removeAttribute('readonly');
     noteTitle.value = "";
     noteText.value = "";
   }
@@ -105,7 +105,43 @@ fetchNotes().then(renderNotes);
 
 const handleNewNoteView = (e) => {
   e.preventDefault();
-  activeNote;
+  activeNote = {};
+  renderActiveNote();
 };
 
+
+const handleRenderSaveBtn = () => {
+  if (!noteTitle.value.trim() || !noteText.value.trim()) {
+    hide(saveNoteBtn);
+  } else {
+    show(saveNoteBtn);
+  }
+};
+
+const saveNote = (note)=>{
+  return fetch(`/api/notes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(note),
+  });
+}
+
+const handleNoteSave = ()=>{
+  const newNote = {
+    title: noteTitle.value,
+    text: noteText.value
+  };
+  saveNote(newNote).then(()=>{
+    fetchNotes().then(renderNotes)
+    renderActiveNote();
+  })
+}
+
+
 newNoteBtn.addEventListener("click", handleNewNoteView);
+noteTitle.addEventListener('keyup', handleRenderSaveBtn);
+noteText.addEventListener('keyup', handleRenderSaveBtn);
+saveNoteBtn.addEventListener('click', handleNoteSave);
+
