@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/sharonealex/calendar-waddle#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "util": "^0.12.4",
+    "uuid": "^8.3.2"
   }
 }
