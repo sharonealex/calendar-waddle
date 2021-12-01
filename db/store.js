@@ -11,7 +11,7 @@ read(){
     return readFileAsync('db/db.json', 'utf-8');
 }
 
-write(){
+write(note){
     return writeFileAsync('db/db.json', JSON.stringify(note));
 }
 
@@ -33,6 +33,12 @@ addNotes(note){
             return newNote;
         })
     })
+}
+
+deleteNotes(id){
+    return this.getNotes()
+    .then((notes) => notes.filter((note) => note.id !== id))
+    .then((filteredNotes) => this.write(filteredNotes));
 }
 }
 
