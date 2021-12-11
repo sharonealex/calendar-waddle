@@ -1,18 +1,19 @@
-const express = require("express");
-const apiRoutes = require("./routes/apiRoutes");
-const htmlRoutes = require("./routes/htmlRoutes")
-
+const express = require('express');
+const routes = require("./routes");
+const {Trip, Location, Traveller} = require("./models")
+const sequelize = require('./config/connection');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
-app.use(express.static('public'));
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, ()=>{
-    console.log(`listening on port ${PORT}`)
-})
+
+// turn on routes
+app.use(routes);
+
+// turn on connection to db and server
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
+});
